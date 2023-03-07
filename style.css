@@ -1,0 +1,47 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#app-container{
+    width: 750px;
+    height: 750px;
+    background-color: black;
+    display: grid;
+    grid-template-columns: 250px 250px 250px;
+    grid-template-rows: 250px 250px 250px;
+    gap: 3px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;;
+}
+.box{
+    width: 250px;
+    height: 250px;
+    background-color: white;
+}
+.o[visibility="false"]{
+    display: none;
+}
+.o[visibility="true"]{
+    display: block;
+}
+.x[visibility="false"]{
+    display: none;
+}
+.x[visibility="true"]{
+    display: block;
+}
+#scoreboard{
+    border: 2px solid black;
+    width: 170px;
+    display: grid;
+    grid-template-columns: 150px 150px;
+    grid-template-rows: 50px 50px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+.box[win="true"]{
+    background-color: green;
+}
