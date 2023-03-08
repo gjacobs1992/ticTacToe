@@ -9,6 +9,7 @@ let gameBoard = [
   ["", "", ""],
   ["", "", ""],
 ];
+
 function checkForWin(board, player) {
   let win = false;
   for (let i = 0; i < 3; i++) {
@@ -158,12 +159,18 @@ function trackMoves(clickedBox, letter) {
   console.log("Box ID:", clickedBox, "Player:", letter);
   console.log(gameBoard);
 }
+
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     let idInt = parseInt(box.id.charAt(box.id.length - 1));
+    console.log("Valid move =", checkForValidMove(box));
+    if(checkForValidMove(box) == false){
+      window.alert('Please select a valid move.');
+    }
     if (turnCount > maxTurnCount || checkForWin == true) {
       window.alert("Please start a new game!");
     }
+    console.log("Turns:", turnCount);
     let o = box.querySelector(".o");
     let x = box.querySelector(".x");
     if (turnCount % 2 != 0 && o.getAttribute("visibility", "false")) {
@@ -174,9 +181,22 @@ boxes.forEach((box) => {
       trackMoves(idInt, x.className);
       x.setAttribute("visibility", "true");
       turnCount++;
+      
     }
+    
   });
 });
+
+function checkForValidMove(box){
+  let children = box.querySelectorAll('img');
+  for(let i = 0; i < children.length; i++){
+    let visStatus = children[i].getAttribute('visibility');
+    if(visStatus == 'true'){
+      return false;
+    }
+  }
+  return true;
+}
 
 btn.addEventListener("click", startOver);
 
