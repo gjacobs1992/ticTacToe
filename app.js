@@ -169,6 +169,7 @@ boxes.forEach((box) => {
   box.addEventListener("click", () => {
     let idInt = parseInt(box.id.charAt(box.id.length - 1));
     console.log("Valid move =", checkForValidMove(box));
+    //BUG
     if(checkForValidMove(box) == false){
       window.alert('Please select a valid move.');
     }
@@ -193,6 +194,7 @@ boxes.forEach((box) => {
   });
 });
 //checking for a valid move. Valid move is only if a letter is not visible
+//not totally functional yet
 function checkForValidMove(box){
   let children = box.querySelectorAll('img');
   for(let i = 0; i < children.length; i++){
