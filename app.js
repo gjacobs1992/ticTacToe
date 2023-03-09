@@ -4,13 +4,16 @@ const maxTurnCount = 9;
 let turnCount = 1;
 let playerXCount = document.getElementById("player-x-count");
 let playerOCount = document.getElementById("player-o-count");
+//mock gameboard as an aray to keep track of moves
 let gameBoard = [
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
 ];
+//checks for a winning move
 function checkForWin(board, player) {
   let win = false;
+  //checking for rows
   for (let i = 0; i < 3; i++) {
     if (
       board[i][0] == player &&
@@ -27,6 +30,7 @@ function checkForWin(board, player) {
       return win;
     }
   }
+  //checking for columns
   for (let j = 0; j < 3; j++) {
     if (
       board[0][j] == player &&
@@ -42,6 +46,7 @@ function checkForWin(board, player) {
       return win;
     }
   }
+  //checking for diagonals
   if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
     win = true;
     if (player == "O") {
@@ -63,6 +68,7 @@ function checkForWin(board, player) {
 
   return false;
 }
+//tracking each move based on the box id and player turn
 function trackMoves(clickedBox, letter) {
   if (clickedBox == 1 && letter == "o") {
     gameBoard[0][0] = "O";
@@ -158,14 +164,17 @@ function trackMoves(clickedBox, letter) {
   console.log("Box ID:", clickedBox, "Player:", letter);
   console.log(gameBoard);
 }
+//click listener 
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     let idInt = parseInt(box.id.charAt(box.id.length - 1));
+    //alerts user if a move is tried after the end of a gam
     if (turnCount > maxTurnCount || checkForWin == true) {
       window.alert("Please start a new game!");
     }
     let o = box.querySelector(".o");
     let x = box.querySelector(".x");
+    //getting player turn based on turn count - O = odd, X = even
     if (turnCount % 2 != 0 && o.getAttribute("visibility", "false")) {
       trackMoves(idInt, o.className);
       turnCount++;
@@ -177,9 +186,8 @@ boxes.forEach((box) => {
     }
   });
 });
-
+//start over button resets the board
 btn.addEventListener("click", startOver);
-
 function startOver() {
   const letterOs = document.querySelectorAll(".o");
   const letterXs = document.querySelectorAll(".x");
