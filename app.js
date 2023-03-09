@@ -4,7 +4,7 @@ const maxTurnCount = 9;
 let turnCount = 1;
 let playerXCount = document.getElementById("player-x-count");
 let playerOCount = document.getElementById("player-o-count");
-//mock gameboard as an array to keep track of moves
+//mock gameboard as a nested array to keep track of moves
 let gameBoard = [
   ["", "", ""],
   ["", "", ""],
@@ -20,7 +20,6 @@ function checkForWin(board, player) {
       board[i][1] == player &&
       board[i][2] == player
     ) {
-        
       win = true;
       if (player == "O") {
         playerOCount.innerText = parseInt(playerOCount.innerText) + 1;
@@ -164,42 +163,44 @@ function trackMoves(clickedBox, letter) {
   console.log("Box ID:", clickedBox, "Player:", letter);
   console.log(gameBoard);
 }
-//click listener 
+//click listener
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     let idInt = parseInt(box.id.charAt(box.id.length - 1));
     console.log("Valid move =", checkForValidMove(box));
-    //BUG
-    if(checkForValidMove(box) == false){
-      window.alert('Please select a valid move.');
-    }
+
     if (turnCount > maxTurnCount || checkForWin == true) {
       window.alert("Please start a new game!");
     }
     console.log("Turns:", turnCount);
     let o = box.querySelector(".o");
     let x = box.querySelector(".x");
-    //getting player turn based on turn count - O = odd, X = even
-    if (turnCount % 2 != 0 && o.getAttribute("visibility", "false")) {
+    //getting player turn based on turn count and making sure it's a valid move. O = odd, X = even
+    if (
+      turnCount % 2 != 0 &&
+      o.getAttribute("visibility", "false") &&
+      checkForValidMove(box) == true
+    ) {
       trackMoves(idInt, o.className);
       turnCount++;
       o.setAttribute("visibility", "true");
-    } else {
+    } else if (
+      turnCount % 2 == 0 &&
+      x.getAttribute("visibility", "false") &&
+      checkForValidMove(box) == true
+    ) {
       trackMoves(idInt, x.className);
       x.setAttribute("visibility", "true");
       turnCount++;
-      
     }
-    
   });
 });
 //checking for a valid move. Valid move is only if a letter is not visible
-//not totally functional yet
-function checkForValidMove(box){
-  let children = box.querySelectorAll('img');
-  for(let i = 0; i < children.length; i++){
-    let visStatus = children[i].getAttribute('visibility');
-    if(visStatus == 'true'){
+function checkForValidMove(box) {
+  let children = box.querySelectorAll("img");
+  for (let i = 0; i < children.length; i++) {
+    let visStatus = children[i].getAttribute("visibility");
+    if (visStatus == "true") {
       return false;
     }
   }
