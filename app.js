@@ -4,7 +4,7 @@ const maxTurnCount = 9;
 let turnCount = 1;
 let playerXCount = document.getElementById("player-x-count");
 let playerOCount = document.getElementById("player-o-count");
-//mock gameboard as an aray to keep track of moves
+//mock gameboard as an array to keep track of moves
 let gameBoard = [
   ["", "", ""],
   ["", "", ""],
