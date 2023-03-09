@@ -168,10 +168,14 @@ function trackMoves(clickedBox, letter) {
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     let idInt = parseInt(box.id.charAt(box.id.length - 1));
-    //alerts user if a move is tried after the end of a gam
+    console.log("Valid move =", checkForValidMove(box));
+    if(checkForValidMove(box) == false){
+      window.alert('Please select a valid move.');
+    }
     if (turnCount > maxTurnCount || checkForWin == true) {
       window.alert("Please start a new game!");
     }
+    console.log("Turns:", turnCount);
     let o = box.querySelector(".o");
     let x = box.querySelector(".x");
     //getting player turn based on turn count - O = odd, X = even
@@ -183,10 +187,23 @@ boxes.forEach((box) => {
       trackMoves(idInt, x.className);
       x.setAttribute("visibility", "true");
       turnCount++;
+      
     }
+    
   });
 });
-//start over button resets the board
+//checking for a valid move. Valid move is only if a letter is not visible
+function checkForValidMove(box){
+  let children = box.querySelectorAll('img');
+  for(let i = 0; i < children.length; i++){
+    let visStatus = children[i].getAttribute('visibility');
+    if(visStatus == 'true'){
+      return false;
+    }
+  }
+  return true;
+}
+
 btn.addEventListener("click", startOver);
 function startOver() {
   const letterOs = document.querySelectorAll(".o");
